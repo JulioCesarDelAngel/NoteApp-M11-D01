@@ -6,7 +6,7 @@ const apiRoutes = require('./routes/api.js');
 const uuid = require('uuid');
 const fs = require('fs');
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001; // Si está definido en el entorno, usarlo. Si no, el 3000
 const app = express();
 
 // Middleware para analizar los datos de JSON y de formularios codificados por url
