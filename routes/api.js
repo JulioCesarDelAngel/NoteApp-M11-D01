@@ -2,6 +2,7 @@ const path = require('path');
 const router = require('express').Router();
 const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
+const { response } = require('express');
 
 console.log('api routes');
 
@@ -41,6 +42,31 @@ router.post('/api/notes', (request,response) => {
         })    
 
    })
+
+})
+
+/**
+ * Eliminar nota
+ */
+
+router.delete('/api/notes/:id', (request, response) => {
+    const id = request.params.id;
+
+    return fs.readFile('db/db.json','utf8',(error, data) => {
+        if (error) 
+        {
+            console.log(error);
+            throw error;
+        }
+            
+        const lista  = JSON.parse(data);
+        const nvaLista = lista.filter( row => id !== row.id);
+
+        fs.writeFile('db/db.json',JSON.stringify(nvaLista), ()=> {
+            response.json(true);
+        })
+
+    })
 
 })
 
